@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,7 +31,7 @@
       <products :products="products" @delete-product="productToBeDelete = $event"></products>
       <pagination></pagination>
     </div>
-    <add-product @create-product="createProduct"></add-product>
+    <add-product :creating-product="creatingProduct" @create-product="createProduct"></add-product>
     <confirm-delete :deleting="deleting" @cancel-delete="productToBeDelete = ''" @delete-product="deleteProduct"></confirm-delete>
   </div>
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -48,7 +47,7 @@
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
   <script type="text/x-template" id="add-product">
-    <div class="modal fade" id="add-product-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="add-product-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -112,7 +111,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </script>
   <script type="module" src="js/all.js"></script>
   <script nomodule src="js/all.js"></script>

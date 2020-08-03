@@ -11,7 +11,8 @@ var app = new Vue({
     products: null,
     getingData: false,
     productToBeDelete: '',
-    deleting: false
+    deleting: false,
+    creatingProduct: false
   },
   created() {
     this.token = document
@@ -39,14 +40,14 @@ var app = new Vue({
         })
     },
     createProduct(newProduct) {
-      console.log('newProduct', newProduct);
+      this.creatingProduct = true
       const createProductPath = `${this.api}${this.UUID}/admin/ec/product`
       axios
         .post(createProductPath, newProduct)
         .then(res => {
-          alert('新增完成')
+          $('#add-product-modal').modal('hide')
+          this.creatingProduct = false
           this.getProducts();
-          console.log(res);
         })
         .catch(err => {
           console.log(err);
@@ -58,8 +59,8 @@ var app = new Vue({
       axios
         .delete(deleteProductPath)
         .then(res => {
-          this.deleting = false
           $('#confirm-delete').modal('hide')
+          this.deleting = false
           this.getProducts();
           console.log(res);
         })
