@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+      .enabled {
+        color: green;
+      }
+      .disabled {
+        color: red;
+      }
+    </style>
+</head>
+
+<body>
+  <div id="app" class="container mt-3">
+    <div class="row">
+      <div class="col mx-auto text-center">
+        <div v-if="!products" class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <products v-else :products="products"></products>
+        <pagination></pagination>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+  </script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <script type="text/x-template" id="products-list">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">分類</th>
+          <th scope="col">產品名稱</th>
+          <th scope="col">原價</th>
+          <th scope="col">售價</th>
+          <th scope="col">是否啟用</th>
+          <th scope="col">編輯</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="product in products" :key="product.id">
+          <td scope="row">{{product.category}}</td>
+          <td scope="row">{{product.title}}</td>
+          <td scope="row">{{product.origin_price}}</td>
+          <td scope="row">{{product.price}}</td>
+          <td scope="row" :class="product.enabled ? 'enabled':'disabled'">{{product.enabled ? '啟用':'停用'}}</td>
+          <td scope="row">
+            <button type="button" class="btn btn-outline-primary btn-sm">編輯</button>
+            <button type="button" class="btn btn-outline-danger btn-sm">刪除</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </script>
+  <script type="text/x-template" id="pagination">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      </ul>
+    </nav>
+  </script>
+
+  <script>
+    Vue.component('products', {
+      props: ['products'],
+      data: function () {
+        return {}
+      },
+      template: '#products-list',
+    })
+
+    Vue.component('pagination', {
+      // props: ['products'],
+      data: function () {
+        return {}
+      },
+      template: '#pagination',
+    })
+
+    var app = new Vue({
+      el: '#app',
+      data: {
+        UUID: '354b1b67-8c78-4eab-a8f1-148bbb2f3ec1',
+        products: null
+      },
+      created() {
+        const vm = this;
+        axios.get(`https://course-ec-api.hexschool.io/api/${this.UUID}/ec/products`).then(function(res) {
+          vm.products = res.data.data
+        })
+      },
+    });
+  </script>
+</body>
+
+</html>
