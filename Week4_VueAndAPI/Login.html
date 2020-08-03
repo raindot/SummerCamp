@@ -27,6 +27,7 @@
           </div>
           <div class="row justify-content-around">
             <button @click.prevent="signout" class="btn btn-outline-primary">Sign out</button>
+            <!-- 請問這個loading按鈕有更好的作法嗎？聽說v-if效能不佳要避免使用？ -->
             <button v-if="signingIn" class="btn btn-primary" type="button" disabled>
               <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
               Loading...
