@@ -7,27 +7,32 @@
   <title>Products</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <style>
-      .enabled {
-        color: green;
-      }
-      .disabled {
-        color: red;
-      }
-    </style>
+  <style>
+    .enabled {
+      color: green;
+    }
+
+    .disabled {
+      color: red;
+    }
+  </style>
 </head>
 
 <body>
   <div id="app" class="container mt-3">
-    <div class="row">
-      <div class="col mx-auto text-center">
-        <div v-if="!products" class="spinner-border" role="status">
-          <span class="sr-only">Loading...</span>
-        </div>
-        <products v-else :products="products"></products>
-        <pagination></pagination>
+    <div v-if="!products" class="d-flex">
+      <div class="spinner-border mx-auto" role="status">
+        <span class="sr-only">Loading...</span>
       </div>
     </div>
+    <div v-else class="col mx-auto text-center mx-auto">
+      <div class="text-right">
+        <button class="btn btn-primary" data-toggle="modal" data-target="#add-product-modal">新增商品</button>
+      </div>
+      <products :products="products"></products>
+      <pagination></pagination>
+    </div>
+    <add-product></add-product>
   </div>
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
@@ -41,74 +46,56 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
-  <script type="text/x-template" id="products-list">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">分類</th>
-          <th scope="col">產品名稱</th>
-          <th scope="col">原價</th>
-          <th scope="col">售價</th>
-          <th scope="col">是否啟用</th>
-          <th scope="col">編輯</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="product in products" :key="product.id">
-          <td scope="row">{{product.category}}</td>
-          <td scope="row">{{product.title}}</td>
-          <td scope="row">{{product.origin_price}}</td>
-          <td scope="row">{{product.price}}</td>
-          <td scope="row" :class="product.enabled ? 'enabled':'disabled'">{{product.enabled ? '啟用':'停用'}}</td>
-          <td scope="row">
-            <button type="button" class="btn btn-outline-primary btn-sm">編輯</button>
-            <button type="button" class="btn btn-outline-danger btn-sm">刪除</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <script type="text/x-template" id="add-product">
+    <div class="modal fade" id="add-product-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">新增產品</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="title">標題</label>
+              <input id="title" v-model="newProduct.title" type="text" class="form-control" placeholder="請輸入標題"
+                required>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="category">分類</label>
+                <input id="category" v-model="newProduct.category" type="text" class="form-control"
+                  placeholder="請輸入分類" required>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="price">單位</label>
+                <input id="unit" v-model="newProduct.unit" type="text" class="form-control" placeholder="請輸入單位">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="origin_price">原價</label>
+                <input id="origin_price" v-model="newProduct.origin_price" type="number" class="form-control"
+                  placeholder="請輸入原價">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="price">售價</label>
+                <input id="price" v-model="newProduct.price" type="number" class="form-control"
+                  placeholder="請輸入售價">
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </script>
-  <script type="text/x-template" id="pagination">
-    <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-        
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-      </ul>
-    </nav>
-  </script>
-
-  <script>
-    Vue.component('products', {
-      props: ['products'],
-      data: function () {
-        return {}
-      },
-      template: '#products-list',
-    })
-
-    Vue.component('pagination', {
-      // props: ['products'],
-      data: function () {
-        return {}
-      },
-      template: '#pagination',
-    })
-
-    var app = new Vue({
-      el: '#app',
-      data: {
-        UUID: '354b1b67-8c78-4eab-a8f1-148bbb2f3ec1',
-        products: null
-      },
-      created() {
-        const vm = this;
-        axios.get(`https://course-ec-api.hexschool.io/api/${this.UUID}/ec/products`).then(function(res) {
-          vm.products = res.data.data
-        })
-      },
-    });
-  </script>
+  <script type="module" src="js/all.js"></script>
+  <script nomodule src="js/all.js"></script>
 </body>
 
 </html>
