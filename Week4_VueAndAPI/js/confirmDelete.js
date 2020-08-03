@@ -1,5 +1,5 @@
 export default {
-  // props : ['productId'],
+  props : ['deleting'],
   data : function () {
     return {}
   },
@@ -8,7 +8,6 @@ export default {
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">確認刪除</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -16,8 +15,12 @@ export default {
         <p>確認刪除這個商品嗎？</p>
       </div>
       <div class="modal-footer">
-        <button @click="$emit('cancel-delete')" type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-        <button @click="$emit('delete-product')" type="button" class="btn btn-primary">確認</button>
+        <button @click="$emit('cancel-delete')" :disabled="deleting" type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+        <button v-if="deleting" type="button" class="btn btn-primary" disabled>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          刪除中...
+        </button>
+        <button v-else @click="$emit('delete-product')" type="button" class="btn btn-primary">確認</button>
       </div>
     </div>
   </div>

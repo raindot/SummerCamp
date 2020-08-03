@@ -20,7 +20,7 @@
 
 <body>
   <div id="app" class="container mt-3">
-    <div v-if="!products" class="d-flex">
+    <div v-if="getingData" class="d-flex">
       <div class="spinner-border mx-auto" role="status">
         <span class="sr-only">Loading...</span>
       </div>
@@ -33,7 +33,7 @@
       <pagination></pagination>
     </div>
     <add-product @create-product="createProduct"></add-product>
-    <confirm-delete @cancel-delete="productToBeDelete = ''" @delete-product="deleteProduct"></confirm-delete>
+    <confirm-delete :deleting="deleting" @cancel-delete="productToBeDelete = ''" @delete-product="deleteProduct"></confirm-delete>
   </div>
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">

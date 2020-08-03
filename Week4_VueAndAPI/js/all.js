@@ -9,7 +9,9 @@ var app = new Vue({
     api: 'https://course-ec-api.hexschool.io/api/',
     token: '',
     products: null,
-    productToBeDelete: ''
+    getingData: false,
+    productToBeDelete: '',
+    deleting: false
   },
   created() {
     this.token = document
@@ -26,11 +28,13 @@ var app = new Vue({
   },
   methods: {
     getProducts() {
+      this.getingData = true
       const productsPath = `${this.api}${this.UUID}/admin/ec/products`
       axios
         .get(productsPath)
         .then((res) => {
           this.products = res.data.data
+          this.getingData = false
           console.log(res.data.data);
         })
     },
@@ -49,10 +53,12 @@ var app = new Vue({
         })
     },
     deleteProduct() {
+      this.deleting = true
       const deleteProductPath = `${this.api}${this.UUID}/admin/ec/product/${this.productToBeDelete}`
       axios
         .delete(deleteProductPath)
         .then(res => {
+          this.deleting = false
           $('#confirm-delete').modal('hide')
           this.getProducts();
           console.log(res);
