@@ -86,7 +86,7 @@
         signout() {
           // 把cookie清除
           document.cookie = `AUTH_TOKEN=; expires=; path=/`;
-          console.log(document.cookie, 'sign out sucess');
+          console.log(document.cookie);
         },
         getData() {
           // 取得瀏覽器的 AUTH_TOKEN cookies（注意取得的時間點）

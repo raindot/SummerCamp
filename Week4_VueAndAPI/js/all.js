@@ -1,6 +1,6 @@
 import products from './products.js'
 import pagination from './pagination.js'
-import addProduct from './addProduct.js'
+import productModal from './productModal.js'
 import confirmDelete from './confirmDelete.js'
 var app = new Vue({
   el: '#app',
@@ -12,7 +12,9 @@ var app = new Vue({
     getingData: false,
     productToBeDelete: '',
     deleting: false,
-    creatingProduct: false
+    loading: false,
+    // tempProduct: {   title: '',   category: '',   unit: '',   origin_price: '',
+    // price: '',   content: '',   description: '',   imageUrl: [''] }
   },
   created() {
     this.token = document
@@ -24,7 +26,7 @@ var app = new Vue({
   components: {
     'products': products,
     'pagination': pagination,
-    'addProduct': addProduct,
+    'productModal': productModal,
     'confirmDelete': confirmDelete
   },
   methods: {
@@ -36,22 +38,45 @@ var app = new Vue({
         .then((res) => {
           this.products = res.data.data
           this.getingData = false
-          console.log(res.data.data);
         })
     },
-    createProduct(newProduct) {
-      this.creatingProduct = true
-      const createProductPath = `${this.api}${this.UUID}/admin/ec/product`
-      axios
-        .post(createProductPath, newProduct)
-        .then(res => {
-          $('#add-product-modal').modal('hide')
-          this.creatingProduct = false
-          this.getProducts();
-        })
-        .catch(err => {
-          console.log(err);
-        })
+    openModal(product, isNew) {
+      if (isNew === 'isNew') {
+        this.$refs.productModal.tempProduct = {
+          title: '',
+          category: '',
+          unit: '',
+          origin_price: '',
+          price: '',
+          content: '',
+          description: '',
+          imageUrl: ['']
+        }
+        this.$refs.productModal.isNew = true
+      } else {
+        this.$refs.productModal.tempProduct = product
+      }
+    },
+    saveProduct({product, isNew}) {
+      this.loading = true
+      let apiPath = ''
+      let httpMethod = ''
+      if (isNew) {
+        httpMethod = 'post'
+        apiPath = `${this.api}${this.UUID}/admin/ec/product`
+      } else {
+        httpMethod = 'patch'
+        apiPath = `${this.api}${this.UUID}/admin/ec/product/${product.id}`
+      }
+      axios({method: httpMethod, url: apiPath, data: product}).then(res => {
+        console.log(res);
+        $('#product-modal').modal('hide')
+        this.loading = false
+        this.getProducts();
+      }).catch(err => {
+        console.log(err);
+        alert('儲存失敗，請洽管理員')
+      });
     },
     deleteProduct() {
       this.deleting = true
@@ -62,7 +87,6 @@ var app = new Vue({
           $('#confirm-delete').modal('hide')
           this.deleting = false
           this.getProducts();
-          console.log(res);
         })
         .catch(err => {
           console.log(err);
