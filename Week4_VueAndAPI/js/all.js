@@ -8,13 +8,19 @@ var app = new Vue({
     UUID: '354b1b67-8c78-4eab-a8f1-148bbb2f3ec1',
     api: 'https://course-ec-api.hexschool.io/api/',
     token: '',
-    products: null,
+    products: {},
+    pagination: {
+      "total": 0,
+      "count": 1,
+      "per_page": 25,
+      "current_page": 1,
+      "total_pages": 1,
+      "links": []
+    },
     getingData: false,
     productToBeDelete: '',
     deleting: false,
-    loading: false,
-    // tempProduct: {   title: '',   category: '',   unit: '',   origin_price: '',
-    // price: '',   content: '',   description: '',   imageUrl: [''] }
+    loading: false
   },
   created() {
     this.token = document
@@ -30,13 +36,20 @@ var app = new Vue({
     'confirmDelete': confirmDelete
   },
   methods: {
-    getProducts() {
+    getProducts(page = 1) {
       this.getingData = true
       const productsPath = `${this.api}${this.UUID}/admin/ec/products`
       axios
-        .get(productsPath)
+        .get(productsPath, {
+        params: {
+          page: page,
+          paged: 5
+        }
+      })
         .then((res) => {
+          console.log(res.data.meta.pagination);
           this.products = res.data.data
+          this.pagination = res.data.meta.pagination
           this.getingData = false
         })
     },
@@ -69,7 +82,6 @@ var app = new Vue({
         apiPath = `${this.api}${this.UUID}/admin/ec/product/${product.id}`
       }
       axios({method: httpMethod, url: apiPath, data: product}).then(res => {
-        console.log(res);
         $('#product-modal').modal('hide')
         this.loading = false
         this.getProducts();

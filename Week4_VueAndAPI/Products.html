@@ -29,7 +29,7 @@
         <button @click="openModal(null, 'isNew')" class="add-new-product btn btn-primary" data-toggle="modal" data-target="#product-modal">新增商品</button>
       </div>
       <products :products="products" @open-modal="openModal" @delete-product="productToBeDelete = $event"></products>
-      <pagination></pagination>
+      <pagination :pagination="pagination" @emit-page="getProducts"></pagination>
     </div>
     <product-modal 
       ref="productModal" 
