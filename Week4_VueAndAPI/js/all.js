@@ -87,6 +87,7 @@ var app = new Vue({
         this.getProducts();
       }).catch(err => {
         console.log(err);
+        this.loading = false
         alert('儲存失敗，請洽管理員')
       });
     },
@@ -101,6 +102,8 @@ var app = new Vue({
           this.getProducts();
         })
         .catch(err => {
+          $('#confirm-delete').modal('hide')
+          this.deleting = false
           console.log(err);
         })
     }
