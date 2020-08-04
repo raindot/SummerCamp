@@ -22,7 +22,12 @@ export default {
         <td scope="row">{{product.price}}</td>
         <td scope="row" :class="product.enabled ? 'enabled':'disabled'">{{product.enabled ? '啟用':'停用'}}</td>
         <td scope="row">
-          <button @click="$emit('open-modal', product)" data-toggle="modal" data-target="#product-modal" type="button" class="btn btn-outline-primary btn-sm">編輯</button>
+          <button 
+            @click="$emit('open-modal', product)" 
+            data-toggle="modal" 
+            data-target="#product-modal" 
+            type="button" 
+            class="btn btn-outline-primary btn-sm">編輯</button>
           <button @click="$emit('delete-product', product.id)" data-toggle="modal" data-target="#confirm-delete" type="button" class="btn btn-outline-danger btn-sm">刪除</button>
         </td>
       </tr>

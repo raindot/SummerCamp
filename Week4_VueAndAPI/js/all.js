@@ -52,6 +52,14 @@ var app = new Vue({
           this.pagination = res.data.meta.pagination
           this.getingData = false
         })
+        .catch(err => {
+          console.dir(err);
+          if (err.request.status === 401) {
+            alert('請先登入')
+            window.location.href = 'Login.html';
+          }
+          this.getingData = false
+        })
     },
     openModal(product, isNew) {
       if (isNew === 'isNew') {
@@ -67,6 +75,7 @@ var app = new Vue({
         }
         this.$refs.productModal.isNew = true
       } else {
+        this.$refs.productModal.isNew = false
         this.$refs.productModal.tempProduct = product
       }
     },
