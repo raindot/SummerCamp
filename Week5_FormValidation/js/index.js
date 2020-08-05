@@ -54,6 +54,10 @@ new Vue({
       }
       localStorage.setItem('shoppingCart', JSON.stringify(this.shoppingCart))
     },
+    emptyCart() {
+      this.shoppingCart = []
+      localStorage.removeItem('shoppingCart')
+    }
   },
   computed: {
     itemsInCart() {

@@ -50,11 +50,13 @@
     </div>
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">購物清單</h5>
+        <div class="d-flex justify-content-between align-items-center">
+          <h5 class="card-title">購物清單</h5>
+          <button @click="emptyCart" type="button" class="btn btn-sm btn-outline-primary">清空購物車</button>
+        </div>
         <table class="table table-striped">
           <thead>
             <tr>
-              <th scope="col">#</th>
               <th scope="col">品名</th>
               <th scope="col">數量</th>
               <th scope="col">單價</th>
@@ -62,13 +64,11 @@
           </thead>
           <tbody>
             <tr v-for="item in shoppingCart">
-              <td></td>
               <td>{{ item.title }}</td>
               <td>{{ item.count }}</td>
               <td>{{ item.price }}</td>
             </tr>
             <tr>
-              <td></td>
               <td></td>
               <td>總價</td>
               <td class="text-success font-weight-bolder">${{ totalPrice }}</td>
