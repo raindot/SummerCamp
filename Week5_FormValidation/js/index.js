@@ -59,6 +59,12 @@ new Vue({
     itemsInCart() {
       let total = this.shoppingCart.reduce(function(acc, cur) { return acc + cur.count }, 0)
       return total
+    },
+    totalPrice() {
+      let totalPrice = this.shoppingCart.reduce(function(acc, cur) {
+        return acc + cur.price * cur.count
+      }, 0)
+      return totalPrice
     }
   },
 })

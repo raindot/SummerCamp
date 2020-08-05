@@ -48,8 +48,37 @@
         </div>
       </div>
     </div>
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">購物清單</h5>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">品名</th>
+              <th scope="col">數量</th>
+              <th scope="col">單價</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in shoppingCart">
+              <td></td>
+              <td>{{ item.title }}</td>
+              <td>{{ item.count }}</td>
+              <td>{{ item.price }}</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td>總價</td>
+              <td class="text-success font-weight-bolder">${{ totalPrice }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
     <validation-observer v-slot="{ invalid }">
-      <form @submit.prevent="submitForm">
+      <form @submit.prevent="">
         <validation-provider rules="required" class="form-group" tag="div" v-slot="{ errors, classes, passed }">
           <label for="username">收件人</label>
           <input id="username" type="text" name="username" v-model="username" class="form-control" :class="classes">
