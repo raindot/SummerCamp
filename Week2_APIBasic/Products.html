@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  
+</head>
+
+<body>
+  <div id="app" class="container mt-3">
+    <h3>產品列表</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">品名</th>
+          <th scope="col">類別</th>
+          <th scope="col">內容</th>
+          <th scope="col">價錢</th>
+        </tr>
+      </thead>
+      <tbody id="products-body">
+        <tr>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    var obj = {
+      UUID: '354b1b67-8c78-4eab-a8f1-148bbb2f3ec1',
+      api: 'https://course-ec-api.hexschool.io/api/',
+      products: [],
+      getProducts() {
+        const apiProducts = `${this.api}${this.UUID}/ec/products`
+      axios
+        .get(apiProducts)
+        .then(res => {
+          this.products = res.data.data
+          console.log(this.products);
+          this.render()
+        })
+      },
+      render() {
+        let table = document.getElementById('products-body')
+        var str = ''
+        this.products.forEach(product => {
+          str += `<tr>
+          <td>${product.title}</td>
+          <td>${product.category}</td>
+          <td>${product.content}</td>
+          <td>${product.price}</td>
+          </tr>`  
+        })
+        table.innerHTML = str
+      }
+    }
+    obj.getProducts()
+  </script>
+</body>
+
+</html>
