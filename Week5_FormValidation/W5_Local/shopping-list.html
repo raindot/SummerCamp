@@ -14,6 +14,9 @@
       padding-right: .2em;
       padding-left: .2em;
     }
+    .pointer {
+      cursor: pointer;
+    }
   </style>
 </head>
 
@@ -41,18 +44,29 @@
               <th scope="col">品名</th>
               <th scope="col">數量</th>
               <th scope="col">單價</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in shoppingCart">
+            <tr v-for="(item, idx) in shoppingCart">
               <td>{{ item.title }}</td>
-              <td>{{ item.count }}</td>
+              <td>
+                <button @click="modifyCount(idx, -1)" class="btn btn-outline-primary btn-sm">-</button>
+                <span class="px-2">{{ item.count }}</span>
+                <button @click="modifyCount(idx, 1)" class="btn btn-outline-primary btn-sm">+</button>
+              </td>
               <td>{{ item.price }}</td>
+              <td>
+                <button @click="deleteItem(idx)" class="btn text-danger">
+                  <i class="far fa-trash-alt"></i>
+                </button>
+              </td>
             </tr>
             <tr>
               <td></td>
               <td>總價</td>
               <td class="text-success font-weight-bolder">${{ totalPrice }}</td>
+              <td></td>
             </tr>
           </tbody>
         </table>
@@ -74,7 +88,6 @@
   </script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vee-validate/3.3.0/vee-validate.full.min.js"></script>
 
   <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"
     integrity="sha384-3Nqiqht3ZZEO8FKj7GR1upiI385J92VwWNLj+FqHxtLYxd9l+WYpeqSOrLh0T12c" crossorigin="anonymous">
