@@ -29,8 +29,11 @@
         <span class="badge badge-pill badge-primary">{{itemsInCart}}</span>
       </a>
     </nav>
-    <div class="row">
-      <div v-for="product in products" class="col-sm-6 col-md-4 pb-4">
+    <div class="row justify-content-center">
+      <div v-show="loading" class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <div v-show="!loading" v-for="product in products" class="col-sm-6 col-md-4 pb-4">
         <div class="card">
           <img :src="product.imageUrl[0]" class="card-img-top" :alt="product.title">
           <div class="card-body">

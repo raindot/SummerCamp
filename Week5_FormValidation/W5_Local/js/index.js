@@ -5,6 +5,7 @@ new Vue({
     UUID: '354b1b67-8c78-4eab-a8f1-148bbb2f3ec1',
     products: {},
     shoppingCart: [],
+    loading: false
   },
   components: {
   },
@@ -14,11 +15,13 @@ new Vue({
   },
   methods: {
     getProducts() {
+      this.loading = true
       const apiProducts = `${this.api}${this.UUID}/ec/products`
       axios
         .get(apiProducts)
         .then(res => {
           this.products = res.data.data
+          this.loading = false
         })
     },
     getShoppingList() {
