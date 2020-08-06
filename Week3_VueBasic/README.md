@@ -1,2 +1,2 @@
-### WEEK 4 Vue & API
-<a href="https://raindot.github.io/VuePractice/Week4_VueAndAPI/Login.html" target="_blank">DEMO</a>
+### WEEK 3 Vue Basic
+<a href="https://raindot.github.io/VuePractice/Week3_VueBasic/Products.html" target="_blank">DEMO</a>
