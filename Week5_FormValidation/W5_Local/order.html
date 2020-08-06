@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>首頁</title>
+  <title>商品訂購</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <style>
@@ -20,7 +20,7 @@
       <a href="index.html" class="navbar-brand mb-0 h1">填寫訂單資料</a>
     </nav>
     <validation-observer v-slot="{ invalid }">
-      <form @submit.prevent="">
+      <form @submit.prevent="placeOrder">
         <validation-provider rules="required" class="form-group" tag="div" v-slot="{ errors, classes, passed }">
           <label for="username">收件人</label>
           <input id="username" type="text" name="收件人姓名" v-model="username" class="form-control" :class="classes">
@@ -43,10 +43,10 @@
         </validation-provider>
         <validation-provider rules="required" class="form-group" tag="div" v-slot="{ errors, classes, passed }">
           <label for="pay">付款方式</label>
-          <select id="pay" class="custom-select">
-            <option value="1">ATM</option>
-            <option value="2">信用卡</option>
-            <option value="3">Line Pay</option>
+          <select id="pay" v-model="payment" class="custom-select">
+            <option value="ATM">ATM</option>
+            <option value="Credit">信用卡</option>
+            <option value="ApplePay">Apple Pay</option>
           </select>
           <span class="invalid-feedback">{{ errors[0] }}</span>
         </validation-provider>
@@ -54,7 +54,13 @@
           <label for="message">留言</label>
           <textarea v-model="message" class="form-control" id="message" rows="3"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary" :disabled="invalid">送出訂單</button>
+        <!-- <button @click="clearCart" type="button" class="btn btn-primary">清除cart</button> -->
+        <button v-show="loading" class="btn btn-primary" type="button" disabled>
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Loading...
+        </button>
+        <button v-show="!loading" type="submit" class="btn btn-primary" :disabled="invalid">送出訂單</button>
+
       </form>
     </validation-observer>
   </div>
