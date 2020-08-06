@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <style>
+    .complete {
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app" class="container mt-3">
+    <div class="input-group mb-3">
+      <input id="todoInput" type="text" class="form-control" placeholder="請輸入待辦事項" aria-label="Recipient's username"
+        aria-describedby="button-addon2">
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="button" id="add-btn">新增</button>
+      </div>
+    </div>
+    <div class="d-flex justify-content-end">
+      <button id="empty-todos-btn" class="btn btn-outline-secondary">清除待辦事項</button>
+    </div>
+    <ul id="todo-list" class="list-group">
+    </ul>
+  </div>
+  <script>
+    var todoInput = document.getElementById('todoInput')
+    var addBtn = document.getElementById('add-btn')
+    var emptyTodosBtn = document.getElementById('empty-todos-btn')
+    var todoList = document.getElementById('todo-list')
+    var todosData = []
+    addBtn.addEventListener('click', addTodo)
+    emptyTodosBtn.addEventListener('click', emptyTodos)
+
+    function addTodo() {
+      var todoContent = todoInput.value
+      todosData.push({
+        title: todoContent,
+        complete: false
+      })
+      todoInput.value = ''
+      render()
+    }
+    function deleteTodo(idx) {
+      todosData.splice(idx, 1)
+      render()
+    }
+    function completeTodo(idx) {
+      todosData[idx].complete = true
+      render()
+    }
+    function emptyTodos() {
+      todosData = []
+      render()
+    }
+    function render() {
+      var str = ''
+      todosData.forEach((todo, idx) => {
+        str += `<li class="list-group-item d-flex justify-content-between">
+          <div class="${todo.complete ? 'complete':''}">${todo.title}</div>
+          <div class="">
+            <button onclick="completeTodo(${idx})" class="btn btn-success btn-sm">完成</button>
+            <button onclick="deleteTodo(${idx})" class="btn btn-danger btn-sm">刪除</button>
+          </div>
+          </li>`
+      })
+      todoList.innerHTML = str
+    }
+  </script>
+</body>
+
+</html>
