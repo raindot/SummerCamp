@@ -8,13 +8,6 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <style>
-    .badge.badge-pill.circle-badge {
-      font-size: 25%;
-      border-radius: 50%;
-      padding-right: .2em;
-      padding-left: .2em;
-    }
-
     .is-invalid {
       color: red;
     }
@@ -30,28 +23,27 @@
       <form @submit.prevent="">
         <validation-provider rules="required" class="form-group" tag="div" v-slot="{ errors, classes, passed }">
           <label for="username">收件人</label>
-          <input id="username" type="text" name="username" v-model="username" class="form-control" :class="classes">
+          <input id="username" type="text" name="收件人姓名" v-model="username" class="form-control" :class="classes">
           <span class="invalid-feedback">{{ errors[0] }}</span>
         </validation-provider>
         <validation-provider rules="required|email" class="form-group" tag="div" v-slot="{ errors, classes, passed }">
           <label for="email">Email</label>
-          <input id="email" type="email" name="email" v-model="email" class="form-control" :class="classes">
+          <input id="email" type="email" name="E-mail" v-model="email" class="form-control" :class="classes">
           <span class="invalid-feedback">{{ errors[0] }}</span>
         </validation-provider>
         <validation-provider rules="required" class="form-group" tag="div" v-slot="{ errors, classes, passed }">
           <label for="phone">電話</label>
-          <input id="phone" type="tel" name="phone" v-model="phone" class="form-control" :class="classes">
+          <input id="phone" type="tel" name="電話" v-model="phone" class="form-control" :class="classes">
           <span class="invalid-feedback">{{ errors[0] }}</span>
         </validation-provider>
         <validation-provider rules="required" class="form-group" tag="div" v-slot="{ errors, classes, passed }">
           <label for="address">收件地址</label>
-          <input id="address" type="text" name="address" v-model="address" class="form-control" :class="classes">
+          <input id="address" type="text" name="收件地址" v-model="address" class="form-control" :class="classes">
           <span class="invalid-feedback">{{ errors[0] }}</span>
         </validation-provider>
         <validation-provider rules="required" class="form-group" tag="div" v-slot="{ errors, classes, passed }">
           <label for="pay">付款方式</label>
           <select id="pay" class="custom-select">
-            <option selected>請選擇</option>
             <option value="1">ATM</option>
             <option value="2">信用卡</option>
             <option value="3">Line Pay</option>
@@ -82,9 +74,9 @@
   <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"
     integrity="sha384-3Nqiqht3ZZEO8FKj7GR1upiI385J92VwWNLj+FqHxtLYxd9l+WYpeqSOrLh0T12c" crossorigin="anonymous">
   </script>
-  <script type="module" src="js/index.js"></script>
+  <script type="module" src="js/order.js"></script>
   <!-- For old browser -->
-  <script nomodule src="js/index.js"></script>
+  <script nomodule src="js/order.js"></script>
 
 </body>
 

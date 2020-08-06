@@ -1,14 +1,3 @@
-VeeValidate.configure({
-  classes: {
-    valid: 'is-valid',
-    invalid: 'is-invalid'
-  }
-});
-// 將 VeeValidate input 驗證工具載入 作為全域註冊
-Vue.component('ValidationProvider', VeeValidate.ValidationProvider);
-// 將 VeeValidate 完整表單 驗證工具載入 作為全域註冊
-Vue.component('ValidationObserver', VeeValidate.ValidationObserver);
-
 new Vue({
   el: '#app',
   data: {
@@ -16,11 +5,6 @@ new Vue({
     UUID: '354b1b67-8c78-4eab-a8f1-148bbb2f3ec1',
     products: {},
     shoppingCart: [],
-    username: '',
-    email: '',
-    phone: '',
-    address: '',
-    message: ''
   },
   components: {
   },
@@ -53,22 +37,12 @@ new Vue({
         this.$set(this.shoppingCart, productInCart, product)
       }
       localStorage.setItem('shoppingCart', JSON.stringify(this.shoppingCart))
-    },
-    emptyCart() {
-      this.shoppingCart = []
-      localStorage.removeItem('shoppingCart')
     }
   },
   computed: {
     itemsInCart() {
       let total = this.shoppingCart.reduce(function(acc, cur) { return acc + cur.count }, 0)
       return total
-    },
-    totalPrice() {
-      let totalPrice = this.shoppingCart.reduce(function(acc, cur) {
-        return acc + cur.price * cur.count
-      }, 0)
-      return totalPrice
     }
   },
 })
