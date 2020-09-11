@@ -48,7 +48,7 @@ router.beforeEach((to, from, next) => {
       });
     });
   } else {
-    console.log('no need login')
+    console.log('no need login');
     next();
   }
 });
